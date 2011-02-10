@@ -3,7 +3,8 @@ var http = require('http');
 var noop = function(){};
 
 var couchGet = function(path,callback){
-	http.get({host: 'localhost', port: '5984', path: path},function(res){
+	console.log(path);
+	http.get({host: 'niklasfi.de', port: '5984', path: path},function(res){
 		var sigma = "";
 		res.setEncoding('utf8');
 		res.on('data',function(chunk){sigma+=chunk});
@@ -12,7 +13,7 @@ var couchGet = function(path,callback){
 }
 
 this.bulkRetrieve = function(ids,callback){
-	var req = http.request({host: 'localhost', port: '5984', path: '/ms/_all_docs?include_docs=true', method: 'POST'}, function(res){
+	var req = http.request({host: 'niklasfi.de', port: '5984', path: '/ms/_all_docs?include_docs=true', method: 'POST'}, function(res){
 		var sigma = "";
 		res.setEncoding('utf8');
 		res.on('data',function(chunk){sigma+=chunk});
@@ -32,7 +33,7 @@ this.bulkRetrieve = function(ids,callback){
 }
 
 this.moduleList = function(callback){
-	couchGet('/ms/_design/modules/_view/all',function(data){
+	couchGet('/ms/_design/module/_view/overview',function(data){
 		var o=[];
 		for(var i in data.rows){
 			o.push(data.rows[i].key);
@@ -42,8 +43,8 @@ this.moduleList = function(callback){
 }
 
 this.moduleByName = function(sname,modname,callback){
-	couchGet('/ms/_design/modules/_view/byname?key='+encodeURI(JSON.stringify([sname,modname])),function(data){
-		if(data.rows[0])
+	couchGet('/ms/_design/module/_view/detail?key='+encodeURI(JSON.stringify([sname,modname])),function(data){
+		if(data && data.rows && data.rows[0])
 			callback(data.rows[0].value)
 		else
 			callback(null);	

@@ -28,13 +28,19 @@ http.createServer(function(req, res) {
 								ids.push(m.events[ename][date][k]);
 				
 					c.bulkRetrieve(ids,function(data){
-						if(list) v.module(req,res,m,list,data);
+						if(list){
+//							console.log('1'+JSON.stringify([m,list,data]));
+							v.module(req,res,m,list,data);
+						}
 						else files = data;
 					})
 				}
 			})
 		c.moduleList(function(data){
-			if(!modname || files) v.module(req,res,mod,data,files);
+			if(!modname || files){
+//				 console.log('2'+JSON.stringify([m,data,files]));
+				 v.module(req,res,m,data,files);
+			}
 			else list = data;
 		})
 	}
@@ -43,5 +49,5 @@ http.createServer(function(req, res) {
 	}
 	
 }).listen(config.port);
-
+console.log('server running on port ' + config.port);
 

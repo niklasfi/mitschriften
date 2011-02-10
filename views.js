@@ -1,7 +1,7 @@
 this.module = function(req,res,moduleData,moduleList,files){
 	res.writeHead(200,{'Content-Type': 'text/html; charset=utf-8'});
 	res.write('<!DOCTYPE html><html lang="de"><head><title>Modul: ' + moduleData.name +'</title><meta charset=utf-8 /></head><body>\n\n<h1>' + moduleData.name + '</h1>\n<div>\n\t<p>verfügbare Module:</p>\n\t<ul class="modulliste">')
-
+	
 	var part = "";
 	var s = null;
 	for (var i in moduleList){
@@ -26,7 +26,7 @@ this.module = function(req,res,moduleData,moduleList,files){
 				var dArr = moduleData.events[ename][date];
 				part+='\n\t\t\t\t\t<ul>'
 				for(var i in dArr)
-					part+='\n\t\t\t\t\t\t<li><a href="/users/' + encodeURI(files[dArr[i]].author) +'">' +files[dArr[i]].author + '</a>, <a href="/download/'+encodeURI(dArr[i])+'">download</a>s: '+ files[dArr[i]].downloads;
+					part+='\n\t\t\t\t\t\t<li><a href="/users/' +  encodeURI(files[dArr[i]].author) +'">' +files[dArr[i]].author + '</a>, <a href="/download/'+encodeURI(dArr[i])+'">download</a>s: '+ files[dArr[i]].downloads;
 				part+='\n\t\t\t\t\t</ul>'
 			}
 			part+='</li>';
