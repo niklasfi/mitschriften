@@ -32,6 +32,18 @@ this.bulkRetrieve = function(ids,callback){
 	
 }
 
+this.filesByModul = function(modulid,callback){
+	couchGet('/ms/_design/files/_view/bymodule',function(data){
+		//console.log(JSON.stringify(data));
+		var lib = {};
+		for(var i in data.rows){
+			lib[data.rows[i].value._id] = data.rows[i].value;
+		}
+		//console.log(JSON.stringify(lib));
+		callback(lib);
+	});
+}
+
 this.moduleList = function(callback){
 	couchGet('/ms/_design/module/_view/overview',function(data){
 		var o=[];

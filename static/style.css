@@ -1,0 +1,78 @@
+body{
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	font-style: italic;
+	font-weight: normal;
+	text-transform: normal;
+	letter-spacing: normal;
+	line-height: 1.6em;
+
+}
+
+div#container{
+	padding-right: 130px;
+}
+
+h1{
+	font-family: Georgia, serif;
+	font-size: 44px;
+	font-style: normal;
+	font-weight: normal;
+	text-transform: normal;
+	letter-spacing: -3px;
+	line-height: 1.2em;
+}
+
+h3{
+	font-family: Georgia, serif;
+	font-size: 20px;
+	font-style: italic;
+	font-weight: normal;
+	text-transform: normal;
+	letter-spacing: normal;
+	line-height: 1.4em;
+}
+
+span.breadcrumb{
+	font-family: monospace, "Courier New";
+	font-size: 12px;
+}
+
+ul.modulliste{
+	list-style: none;
+}
+
+ul.modulliste li{
+	padding: 10px 0 10px 0;
+}
+
+ul.modulliste .semestername {
+	color: #666; padding-right: 30px;
+}
+
+ul.modulliste a{
+	text-decoration: none;
+	color: black;
+	border: 3px solid #2AC1EB;
+	margin-left: 5px;
+	padding: 3px 6px 3px 3px;
+}
+
+div#right{
+	position: fixed;
+	right: 10px;
+	top: 100px;;
+}
+
+div#right h3{
+	margin-top: 0;
+}
+
+div#right ul{
+	padding-left: 10px;
+}
+
+div#right li{
+	list-style: none;
+	
+}
