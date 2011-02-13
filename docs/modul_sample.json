@@ -1,0 +1,11 @@
+{
+   "_id": "28d946b681df8ab17c2010193e001172",
+   "type": "modul",
+   "year": "11",
+   "term": "SS",
+   "name": "Numerische Analysis II",
+   "events": {
+      "Vorlesung": {"2011-04-04": ["28d946b681df8ab17c2010193e003af7"], "2011-04-11": []},
+      "Kleingruppenübung": {"Blatt 1": [], "Blatt 2": []}
+   }
+}

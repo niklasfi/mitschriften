@@ -6,38 +6,23 @@ var formidable = require('formidable'),
 
 var config = require('./config.js');
 
-var c = require('./controllers.js');
+var m = require('./models.js');
 var v = require('./views.js');
+var c = require('./controllers.js');
 
-http.createServer(function(req, res) {
-	var path = decodeURI(url.parse(req.url).pathname);
+http.createServer(function(req, res){
+	res.ctime=Date.now();
+	req.parsedUrl = url.parse(req.url);
+	var path = decodeURI(req.parsedUrl.pathname);
 	var matches;
-	if( matches = path.match(/^\/module(\/([^\/]+)\/([^\/]+\/?))?$/i ) ){
-		var sname = matches[2]
-		var modname = matches[3];
-		var list, m, files;
-
-		if(modname)
-			c.moduleByName(sname,modname,function(data){
-				if(data === null) v.send404(req,res);
-				else{
-					m = data;
-								
-					c.filesByModul(m._id,function(data){
-						if(list){
-//							console.log('1'+JSON.stringify([m,list,data]));
-							v.module(req,res,m,list,data);
-						}
-						else files = data;
-					})
-				}
-			})
-		c.moduleList(function(data){
-			if(!modname || files){
-				 v.module(req,res,m,data,files);
-			}
-			else list = data;
-		})
+	if( matches = path.match(/^.*[^/]$/) ){
+		v.redirect(req,res,matches[0]+'/',true);
+	}
+	else if( matches = path.match(/^\/module(\/(([^\/]+)\/([^\/]+)\/?)?)?$/i ) ){
+		c.module(req,res,matches);
+	}
+	else if( matches = path.match(/^\/upload\/([^\/]+)\/([^\/]+)(\/(([^\/]+)\/([^\/]+)\/?)?)?$/i)){
+		c.upload(req,res,matches);
 	}
 	else{
 		v.send404(req,res);

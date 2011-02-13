@@ -1,0 +1,103 @@
+body{
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	font-style: italic;
+	font-weight: normal;
+	text-transform: normal;
+	letter-spacing: normal;
+	line-height: 1.6em;
+
+}
+
+div#container{
+	margin-right: 130px;
+	margin-left: 10px;
+}
+
+h1{
+	font-family: Georgia, serif;
+	font-size: 44px;
+	font-style: normal;
+	font-weight: normal;
+	text-transform: normal;
+	letter-spacing: -3px;
+	line-height: 1.2em;
+}
+
+h3{
+	font-family: Georgia, serif;
+	font-size: 20px;
+	font-style: italic;
+	font-weight: normal;
+	text-transform: normal;
+	letter-spacing: normal;
+	line-height: 1.4em;
+}
+
+span.breadcrumb{
+	font-family: monospace, "Courier New";
+	font-size: 12px;
+}
+
+span.emph{
+	font-weight: bold;
+	color: #2AC1EB;
+}
+
+table.separation .header{
+	color: #666; padding:6px 30px 0 40px;
+	min-width: 80px;
+	vertical-align: top;
+
+}
+
+a{
+	color: black; text-decoration: none;
+}
+
+.items .item{
+	float: left;
+	border: 3px solid #2AC1EB;
+	margin-left: 5px;
+	padding: 3px 6px 3px 3px;
+	margin-bottom: 3px;
+}
+
+.items div.icons{
+	float: left;
+}
+
+.items a.add img{
+	margin: 7px 0 4px 3px;
+}
+
+.items img.remove{
+	margin-left: 3px;
+}
+
+.items img.flag{
+	margin-left: 3px;
+}
+
+div#right{
+	position: fixed;
+	right: 10px;
+	top: 20%;
+}
+
+div#right h3{
+	margin-top: 0;
+}
+
+div#right ul{
+	padding-left: 10px;
+}
+
+div#right li{
+	list-style: none;
+	
+}
+
+span.time{
+	color: #666;
+}

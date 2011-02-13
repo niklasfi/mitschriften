@@ -1,64 +1,46 @@
-var http = require('http');
+var m = require('./models.js');
+var v = require('./views.js');
 
-var noop = function(){};
-
-var couchGet = function(path,callback){
-	console.log(path);
-	http.get({host: 'niklasfi.de', port: '5984', path: path},function(res){
-		var sigma = "";
-		res.setEncoding('utf8');
-		res.on('data',function(chunk){sigma+=chunk});
-		res.on('end',function(){callback(JSON.parse(sigma))});
-	});
-}
-
-this.bulkRetrieve = function(ids,callback){
-	var req = http.request({host: 'niklasfi.de', port: '5984', path: '/ms/_all_docs?include_docs=true', method: 'POST'}, function(res){
-		var sigma = "";
-		res.setEncoding('utf8');
-		res.on('data',function(chunk){sigma+=chunk});
-		res.on('end',function(){
-			var lib={};
-			var arr = JSON.parse(sigma).rows;
-			for(var k in arr){
-				if(arr[k].doc != undefined){
-					lib[arr[k].key] = arr[k].doc;
-				}
-			}
-			callback(lib)
-		});
-	});
-	req.end(JSON.stringify({keys:ids}));
+this.module = function(req,res,matches){
+	var sname = matches[3]
+	var modname = matches[4];
+	var list, mod, files;
 	
-}
-
-this.filesByModul = function(modulid,callback){
-	couchGet('/ms/_design/files/_view/bymodule',function(data){
-		//console.log(JSON.stringify(data));
-		var lib = {};
-		for(var i in data.rows){
-			lib[data.rows[i].value._id] = data.rows[i].value;
+	if(modname)
+		m.moduleByName(sname,modname,function(data){
+			if(data === null) v.send404(req,res);
+			else{
+				mod = data;
+						
+				m.filesByModul(mod._id,function(data){
+					if(list){
+	//							console.log('1'+JSON.stringify([m,list,data]));
+						v.module(req,res,mod,list,data);
+					}
+					else files = data;
+				})
+			}
+		})
+	m.moduleList(function(data){
+		if(!modname || files){
+			 v.module(req,res,mod,data,files);
 		}
-		//console.log(JSON.stringify(lib));
-		callback(lib);
-	});
-}
-
-this.moduleList = function(callback){
-	couchGet('/ms/_design/module/_view/overview',function(data){
-		var o=[];
-		for(var i in data.rows){
-			o.push(data.rows[i].key);
-		}
-		callback(o);
+		else list = data;
 	})
 }
 
-this.moduleByName = function(sname,modname,callback){
-	couchGet('/ms/_design/module/_view/detail?key='+encodeURI(JSON.stringify([sname,modname])),function(data){
-		if(data && data.rows && data.rows[0])
-			callback(data.rows[0].value)
-		else
-			callback(null);	
-	});
+this.upload= function(req,res,matches){
+	var sname = matches[1];
+	var modname = matches[2];
+	var ename = matches[5];
+	var date = matches[6];
+	var inline = (req.parsedUrl.query=="inline")
+	
+	if(modname)
+		m.moduleByName(sname,modname,function(data){
+			if (data)	v.uploadForm(req,res,data,ename,date,inline);
+			else v.send404(req,res);
+		})
+	else
+		v.send404(req,res);
 }
